@@ -1,11 +1,11 @@
-import {Interactive} from "./interactive";
+import {ButtonComp, DivComp} from "./interactive";
 
 export class App<T extends HTMLElement> {
 
 
 
   private h1!: HTMLHeadingElement;
-  private myBtnInter!: Interactive;
+  private myBtnInter!: ButtonComp;
 
   constructor( public readonly target: T ) {
     console.log( this.target );
@@ -15,6 +15,7 @@ export class App<T extends HTMLElement> {
   private init() {
     this.setupHeader();
     this.setupButton ();
+    this.setupDiv ();
   }
   private setupHeader() {
     this.h1 = this.target.querySelector('h1') as HTMLHeadingElement;
@@ -25,11 +26,16 @@ export class App<T extends HTMLElement> {
   }
 
   private setupButton() {
-    this.myBtnInter = new Interactive( 'hello world' );
-    this.myBtnInter.render( this.target );
+    this.myBtnInter = new ButtonComp( 'hello world', this.target );
+    this.myBtnInter.render( );
     this.myBtnInter.addEventListener('click', ( evt ) => {
       // console.log(this, evt )
       this.toggleH1Color();
     })
+  }
+
+  private setupDiv() {
+    const divComp = new DivComp( this.target );
+    divComp.render();
   }
 }

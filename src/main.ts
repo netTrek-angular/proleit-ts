@@ -19,14 +19,33 @@ class Human {
     console.log('human')
   }
 
+  sagMirDeinenNamen (): string {
+    return this.name;
+  }
+
 }
 
 class Man extends Human {
+  get wifeName(): string {
 
-  constructor() {
-    super();
+    return this._wifeName;
+  }
+
+  set wifeName(value: string) {
+
+    this._wifeName = value;
+  }
+
+  private _wifeName: string = '';
+
+  constructor( name?: string ) {
+    super( name );
     console.log('man')
     this.init ();
+  }
+
+  override sagMirDeinenNamen(): string {
+    return super.sagMirDeinenNamen() + '____';
   }
 
   private init() {
@@ -34,9 +53,13 @@ class Man extends Human {
   }
 }
 
-const h = new Human();
-const m = new Man();
+const h = new Human('human');
+const m = new Man( 'man' );
 
+console.log( h.sagMirDeinenNamen() );
+console.log( m.sagMirDeinenNamen() );
 
+m.wifeName = 'heike'
+console.log( m.wifeName );
 
 Human.TYPE = 'Frau'
