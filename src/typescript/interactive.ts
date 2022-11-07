@@ -14,7 +14,7 @@ export class Interactive  {
   }
 
   public addEventListener<K extends keyof HTMLElementEventMap>
-    (type: K, listener: (...arg: any[]) => void): void {
+    (type: K, listener: ( evt: HTMLElementEventMap[K], ...arg: any[]) => void): void {
       this.btn.addEventListener( type, listener );
   }
 

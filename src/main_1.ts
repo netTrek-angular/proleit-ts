@@ -139,3 +139,56 @@ console.log( getVal( usr, 'name') )
 
 
 console.log( Object.keys( usr ) );
+
+
+
+let usrInfo = {id: 123, name: 'saban', address: {zip: 123}};
+// let usrWithMail = Object.assign( {}, usr, {mail: 'us@netTrek.de'} )
+let usrWithMail = {...usrInfo, mail: 'us@netTrek.de', id: 333};
+
+let list: number[] = [1,2,3];
+
+let listClone = [...list];
+listClone [0] = 99;
+
+let extList = [0, ...list, 4,5,6]
+
+function logValues ( ...args: number[] ) {
+  args.forEach( value => console.log ( value ) )
+}
+
+// logValues( 1,2,3 );
+
+logValues( ...extList );
+
+let test = {
+  list: [1,2,3,4, -1 ],
+  trigger: function ( ...args: number[] ) {
+    console.log( [...args, ...this.list ] )
+  }
+}
+test.trigger( 0, 1, 3, 4  );
+
+class Test {
+  list = [1,2]
+}
+
+const t = new Test();
+test.trigger.call( t, ...extList );
+
+const data = {col1: 1, col7: 7, col6: 6, col5: 5, col2: 2, col3: 3, col4: 4 }
+const {col1, col7} = data;
+
+function listVals ( [ firstVal, secVal ]: number[] ) {
+  console.log( firstVal, secVal, (secVal ?? 99) + firstVal )
+  // debugger
+}
+//
+// function listVals ( data: number[]) {
+//   const firstVal = data[0];
+//   const secVal = data[1];
+//   debugger
+// }
+
+listVals ( [1, 2] )
+
