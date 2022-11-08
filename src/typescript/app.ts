@@ -1,5 +1,6 @@
 import {ButtonComp, DivComp} from "./interactive";
 
+
 export class App<T extends HTMLElement> {
 
 

@@ -1,5 +1,6 @@
 import {RoleType} from "./typescript/role";
 import {Address, User, UserWithAddress, UserWithAddress2} from "./typescript/user";
+import {ClassMemberKind} from "@angular/compiler-cli/src/ngtsc/reflection";
 
 let usernamne: string = 'saban';
 let usrId: number = 123;
@@ -134,7 +135,7 @@ function getVal<T, U extends keyof T> ( source: T, propKey: U ): T[U] {
   return source[propKey];
 }
 
-console.log( getVal( usr, 'id') )
+console.log( getVal( address, 'zip') )
 console.log( getVal( usr, 'name') )
 
 

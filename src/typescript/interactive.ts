@@ -1,11 +1,11 @@
 export abstract class SimpleComp<T extends HTMLElement> {
-  protected elem!: T;
+  protected readonly elem: T;
 
   constructor( private readonly target: HTMLElement ) {
-    this.createElem ();
+    this.elem = this.createElem ();
   }
 
-  protected abstract createElem (): void;
+  protected abstract createElem (): T;
 
   public render () {
     this.target.appendChild( this.elem );
@@ -17,13 +17,15 @@ export abstract class SimpleComp<T extends HTMLElement> {
   }
 }
 
+
 export class DivComp extends SimpleComp<HTMLDivElement> {
-  protected createElem(): void {
-    this.elem = document.createElement('div');
-    this.elem.innerHTML = `
+  protected createElem(): HTMLDivElement {
+    const elem = document.createElement('div');
+    elem.innerHTML = `
     <strong>hello</strong> world
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam autem consequuntur, debitis dolorem eius fugit impedit ipsa labore, minus molestiae obcaecati quam quasi quibusdam rem saepe sequi sit ullam voluptatibus.</p>
     `
+    return elem;
   }
 
 }
@@ -41,7 +43,7 @@ export class ButtonComp extends SimpleComp<HTMLButtonElement> {
   }
 
   protected createElem () {
-    this.elem = document.createElement('button');
+    return document.createElement('button');
   }
 
 }

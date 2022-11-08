@@ -6,6 +6,33 @@ if ( target ) {
   const app: App<HTMLElement> = new App ( target as HTMLElement );
 }
 
+function logMe ( level: 'log' | 'warn' | 'error' = 'log') {
+  return function ( target: unknown, propertyKey: string, descriptor: PropertyDescriptor ) {
+    const original = descriptor.value;
+    descriptor.value = function () {
+      const val = original.apply ( this, arguments );
+      console[level].call ( this, 'log aus ' + propertyKey + ' := ' + val.toString() );
+      /*
+      switch ( level ) {
+        case "log":
+          console.log('log aus ' + propertyKey + ' := ' + val.toString() );
+          break;
+        case "warn":
+          console.warn('log aus ' + propertyKey + ' := ' + val.toString() );
+          break;
+        case "error":
+          console.error('log aus ' + propertyKey + ' := ' + val.toString() );
+          break;
+        default:
+          throw  new Error( 'unknown log level' );
+      }
+      */
+      return val;
+    }
+  }
+}
+
+
 
 class Human {
 
@@ -16,9 +43,10 @@ class Human {
   protected age = 0; // nur in dieser Klasse und in den erbenden Klassen
 
   constructor( private name: string = 'Saban' ) {
-    console.log('human')
+    // console.log('human')
   }
 
+  @logMe( 'error' )
   sagMirDeinenNamen (): string {
     return this.name;
   }
@@ -40,9 +68,10 @@ class Man extends Human {
 
   constructor( name?: string ) {
     super( name );
-    console.log('man')
+    // console.log('man')
     this.init ();
   }
+
 
   override sagMirDeinenNamen(): string {
     return super.sagMirDeinenNamen() + '____';
@@ -60,6 +89,6 @@ console.log( h.sagMirDeinenNamen() );
 console.log( m.sagMirDeinenNamen() );
 
 m.wifeName = 'heike'
-console.log( m.wifeName );
+// console.log( m.wifeName );
 
 Human.TYPE = 'Frau'
